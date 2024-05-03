@@ -41,7 +41,7 @@ jobs:
           context: .
           file: ./Dockerfile
           platforms: linux/amd64,linux/arm64
-          secret-envs: |
+          build-args: |
             AGENT_VERSION=${{ env.AGENT_VERSION }}
           push: true
           tags: |
