@@ -5,16 +5,17 @@ on:
 
 env:
   PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
-#  AGENT_VERSION: "1.175.0"
+
 
 jobs:
   build:
-    matrix:
-      agent_version:
-        - latest
-        - 1.402
-        - 1.403
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        agent_version:
+          - latest
+          - 1.402
+          - 1.403
     steps:
       - 
         name: Checkout
