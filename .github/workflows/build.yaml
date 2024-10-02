@@ -5,10 +5,15 @@ on:
 
 env:
   PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
-  AGENT_VERSION: "1.175.0"
+#  AGENT_VERSION: "1.175.0"
 
 jobs:
   build:
+    matrix:
+      agent_version:
+        - latest
+        - 1.402
+        - 1.403
     runs-on: ubuntu-latest
     steps:
       - 
@@ -42,8 +47,8 @@ jobs:
           file: ./Dockerfile
           platforms: linux/amd64
           build-args: |
-            AGENT_VERSION=${{ env.AGENT_VERSION }}
+            AGENT_VERSION=${{ matrix.agent_version }}
           push: true
           tags: |
-            ghcr.io/scheiblingco/windmill-x:${{ env.AGENT_VERSION }}
-            docker.io/scheibling/windmill-x:${{ env.AGENT_VERSION }}
+            ghcr.io/scheiblingco/windmill-x:${{ matrix.agent_version }}
+            docker.io/scheibling/windmill-x:${{ matrix.agent_version }}
