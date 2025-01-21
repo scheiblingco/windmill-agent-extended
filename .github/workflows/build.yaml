@@ -1,7 +1,17 @@
 name: build
-on:
-  push:
-    branches: ["main"]
+on: 
+  workflow_dispatch:
+    inputs:
+      windmillVersion:
+        description: "The windmill version to build for"
+        required: true
+        default: '1.402'
+        type: string
+
+#  push:
+#    branches: ["main"]
+#workflow_dispatch:
+
 
 env:
   PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -10,12 +20,6 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        agent_version:
-          - latest
-          - 1.402
-          - 1.403
     steps:
       - 
         name: Checkout
@@ -48,8 +52,8 @@ jobs:
           file: ./Dockerfile
           platforms: linux/amd64
           build-args: |
-            AGENT_VERSION=${{ matrix.agent_version }}
+            AGENT_VERSION=${{ inputs.windmillVersion }}
           push: true
           tags: |
-            ghcr.io/scheiblingco/windmill-x:${{ matrix.agent_version }}
-            docker.io/scheibling/windmill-x:${{ matrix.agent_version }}
+            ghcr.io/scheiblingco/windmill-x:${{ inputs.windmillVersion }}
+            docker.io/scheibling/windmill-x:${{ inputs.windmillVersion }}
