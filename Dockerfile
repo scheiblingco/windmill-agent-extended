@@ -1,5 +1,5 @@
 ARG AGENT_VERSION
-FROM ghcr.io/windmill-labs/windmill:${AGENT_VERSION}
+FROM ghcr.io/windmill-labs/windmill-full:${AGENT_VERSION}
 
 
 RUN curl -sSL -O https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb && dpkg -i packages-microsoft-prod.deb && \
